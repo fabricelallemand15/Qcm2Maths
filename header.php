@@ -20,7 +20,7 @@
           <i class="bi bi-person-check"></i><?= $coordonnees['nom'] ?>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
-            <li class="menu_item"><?= $coordonnees['nom'] ?> <?= $coordonnees['prenom'] ?></li>
+            <li class="menu_item"><?= $coordonnees['prenom'] ?> <?= $coordonnees['nom'] ?></li>
             <li class="menu_item"><?= $coordonnees['mail'] ?></li>
             <li><hr class="dropdown-divider"></li>
             <li class="menu_item"><a class="dropdown-item" href="deconnexion.php">Déconnexion</a></li>
