@@ -22,6 +22,20 @@ session_start();
     </form>
 </div>
 
+<script type="text/javascript">
+    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+    const alert = (message, type) => {
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+            `<div>${message}</div>`,
+            `<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
+            `</div>`
+        ].join('')
+        alertPlaceholder.append(wrapper)
+    }
+</script>
+
 <?php
 // TODO rediriger la page en cas de connexion réussie
 if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or $_POST['email'] == NULL) {
@@ -33,20 +47,6 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
     $req = $bdd->prepare('SELECT * FROM utilisateurs WHERE mail = ?');
     $req->execute(array($_POST['email']));
     $utilisateur = $req->fetch();
-
-    /* Code javascript pour afficher le message d'erreur ou de succès */
-    echo '<script type="text/javascript">
-                      const alertPlaceholder = document.getElementById("liveAlertPlaceholder")
-                      const alert = (message, type) => {
-                            const wrapper = document.createElement("div")
-                            wrapper.innerHTML = [
-                                `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-                                `<div>${message}</div>`,
-                                `<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
-                                `</div>`
-                            ].join("")
-                        alertPlaceholder.append(wrapper)}
-                </script>';
 
     /* On teste si le mdp proposé correspond à celui enregistré et si celui-ci est bien renseigné */
     /* Cas où cela ne fonctionne pas */
@@ -69,6 +69,7 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
         echo '<script type="text/javascript">                 
                     alert("Connexion réussie !", "success")
                 </script>';
+        include('accueil.php');
     }
 }
   ?>
