@@ -7,7 +7,7 @@ include("head.php");
 <body>
 <?php
 if (empty($_SESSION) or $_SESSION['connecte'] != true) {
-    // include("header.php");
+    include("header.php");
     echo "Vous ne devriez pas être ici : <a href='index.php'>Retour</a>";
     die();
 } else {
