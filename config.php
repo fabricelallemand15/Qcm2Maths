@@ -1,4 +1,7 @@
 <?php
+// informations de l'application
+define('APPNAME', 'Qcm2Maths');
+define('MATIERE', 'Mathématiques');
 // informations d'identification de la base de données
 define('DB_SERVER', '127.0.0.1');
 define('DB_USERNAME', 'fabrice');
@@ -12,10 +15,5 @@ try {
     die('Erreur : '.$e->getMessage());
 }
 
-echo "Connexion à la base de données réussie";
-
-// Vérifiez la connexion
-// if($conn === false){
-//     die("ERREUR : Impossible de se connecter. " . mysqli_connect_error());
-// }
+// echo "Connexion à la base de données réussie";
 ?>

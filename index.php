@@ -1,14 +1,14 @@
 <?php 
+session_start();
 include("head.php");
 require('config.php');
-session_start();
 ?>
 
 <body id="login">
 <h2>Bienvenue sur MathsQcmApp</h2>
 <div>
     <form id="form_login" action="" method="post">
-            <img class="mb-4" src="images/logo_qcm2maths.png" alt="logo" width="72">
+            <img class="mb-4" src="images/logo_qcm2maths.png" alt="logo" id="logo">
             <h1 class="h3 mb-3 fw-normal">Authentification</h1>
             <div class="d-grid gap-2">
                 <input type="email" name="email" id="email" placeholder="Email" required/>
@@ -37,10 +37,9 @@ session_start();
 </script>
 
 <?php
-// TODO rediriger la page en cas de connexion réussie
 if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or $_POST['email'] == NULL) {
 
-    echo 'Vous n\'avez pas fourni toutes les infos';
+    echo '';
 } else {
 
     /* Récupération des infos de l'utilisateur */
@@ -69,7 +68,11 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
         echo '<script type="text/javascript">                 
                     alert("Connexion réussie !", "success")
                 </script>';
-        include('accueil.php');
+        
+        header('Location: accueil.php');
+        // or die();
+        
+        exit();
     }
 }
   ?>

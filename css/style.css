@@ -1,12 +1,10 @@
 body {
-    background: beige;
     font-family: 'Open Sans', 'sans-serif';
-    font-size: 14px;
+    font-size: 16px;
     padding: 20px;
 }
 
 #login {
-    background: beige;
     font-family: 'Open Sans', 'sans-serif';
     height: 100%;
     text-align: center;
@@ -19,12 +17,46 @@ body {
 }
 
 #logo {
-    display:block;
-    float: right;
-    width: 10%;
+    width: 72px;
+}
+
+#logo_header {
+    width: 35px;
+    display: block;
+    float: left;
+    margin-right: 1em;
 }
 
 .center {
     display: block;
     margin: 0 auto;
+}
+
+#h1-header {
+    display: inline;
+    font-size: 1.5em;
+}
+
+#email {
+    font-size: 1.5em;
+}
+
+#mdp {
+    font-size: 1.5em;
+}
+
+#menu_utilisateur_header {
+    display: block;
+    float: right;
+}
+
+.menu_item {
+    font-size: 75%;
+    text-align: center;
+}
+
+i {
+    font-size: 1.5em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
 }
