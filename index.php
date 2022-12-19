@@ -4,17 +4,17 @@ include("head.php");
 require('config.php');
 ?>
 
-<body id="login">
-<h2>Bienvenue sur MathsQcmApp</h2>
+<div id="login">
+<h2>Bienvenue sur Qcm2Maths</h2>
 <div>
     <form id="form_login" action="" method="post">
             <img class="mb-4" src="images/logo_qcm2maths.png" alt="logo" id="logo">
             <h1 class="h3 mb-3 fw-normal">Authentification</h1>
             <div class="d-grid gap-2">
-                <input type="email" name="email" id="email" placeholder="Email" required/>
-                <input type="password" name="mdp" id="mdp" placeholder="Mot de passe" required/>
+                <input type="email" name="email" id="email" placeholder="Email" autocomplete="email" required/>
+                <input type="password" name="mdp" id="mdp" placeholder="Mot de passe"  autocomplete="new-password" required/>
                 <button class="w-100 btn btn-lg btn-success" type="submit">Valider</button>
-                <button class='w-100 btn btn-lg btn-primary' type="button" onclick="">Nouvel utilisateur ?</button>
+                <button class='w-100 btn btn-lg btn-primary' type="button" onclick="location.href = 'nouvel-utilisateur.php';">Nouvel utilisateur ?</button>
                 <button class='w-100 btn btn-lg btn-warning' type="button" onclick="">Mot de passe oublié ?</button>
                 <div id="liveAlertPlaceholder"></div>   
             </div>
@@ -22,19 +22,7 @@ require('config.php');
     </form>
 </div>
 
-<script type="text/javascript">
-    const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
-    const alert = (message, type) => {
-        const wrapper = document.createElement('div')
-        wrapper.innerHTML = [
-            `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-            `<div>${message}</div>`,
-            `<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
-            `</div>`
-        ].join('')
-        alertPlaceholder.append(wrapper)
-    }
-</script>
+<script type="text/javascript" src="js/BSalert.js"></script>
 
 <?php
 if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or $_POST['email'] == NULL) {
@@ -52,7 +40,7 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
     $mdp_hash = hash('sha256', $_POST['mdp']);
     if ($mdp_hash != $utilisateur['mdp']) {
         echo '<script type="text/javascript">                 
-                    alert("Informations incorrectes !", "danger")
+                    BSalert("Informations incorrectes !", "danger")
                 </script>';
     } else {
         $_SESSION['id_utilisateur'] = $utilisateur['id_utilisateur'];
@@ -66,7 +54,7 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
         $req = $bdd->prepare('UPDATE utilisateurs SET derniere_connexion = NOW() WHERE mail = ?');
         $req->execute(array($_POST['email']));
         echo '<script type="text/javascript">                 
-                    alert("Connexion réussie !", "success")
+                    BSalert("Connexion réussie !", "success")
                 </script>';
         
         header('Location: accueil.php');
@@ -76,6 +64,8 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
     }
 }
   ?>
+
+</div>
 
 
 <?php include("footer.php") ?>

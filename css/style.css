@@ -60,3 +60,11 @@ i {
     margin-left: 0.5em;
     margin-right: 0.5em;
 }
+
+#pied {
+    margin-top: 3em;
+}
+
+.form_new_user {
+    width: 20em;
+}

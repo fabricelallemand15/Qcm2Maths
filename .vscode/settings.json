@@ -9,7 +9,7 @@
             "port": 3306,
             "driver": "MySQL",
             "name": "connexion",
-            "database": "MathsQcmApp",
+            "database": "Qcm2Maths",
             "username": "fabrice",
             "password": "root",
             "connectionTimeout": 100

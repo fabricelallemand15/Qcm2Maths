@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>MathsQcmApp</title>
+    <title>Qcm2Maths</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/logo_qcm2maths.png" />
 
     <!-- MathJax -->
@@ -30,3 +30,5 @@
     <link rel="stylesheet" href="css/style.css" />
 
 </head>
+
+<body>
