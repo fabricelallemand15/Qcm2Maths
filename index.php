@@ -51,6 +51,7 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
         $_SESSION['avatar'] = $utilisateur['avatar'];
         $_SESSION['derniere_connexion'] = $utilisateur['derniere_connexion'];
         $_SESSION['connecte'] = true;
+        $_SESSION['qualite'] = $utilisateur['statut'];
         $req = $bdd->prepare('UPDATE utilisateurs SET derniere_connexion = NOW() WHERE mail = ?');
         $req->execute(array($_POST['email']));
         echo '<script type="text/javascript">                 

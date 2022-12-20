@@ -8,7 +8,7 @@
 
         <nav class="navbar navbar-expand-lg bg-primary bg-gradient bg-opacity-50">
   <div class="container-fluid">
-  <a href='check-accueil.php'><img src="images/logo_qcm2maths.png" alt="logo Qcm2Maths" id='logo_header' /></a>
+  <a href='accueil.php'><img src="images/logo_qcm2maths.png" alt="logo Qcm2Maths" id='logo_header' /></a>
         <h1 id='h1-header'>Qcm2Maths - QCM de Mathématiques</h1>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
 <?php } else { ?>
   <nav class="navbar navbar-expand-lg bg-primary bg-gradient bg-opacity-50">
   <div class="container-fluid">
-  <a href='check-accueil.php'><img src="images/logo_qcm2maths.png" alt="logo Qcm2Maths" id='logo_header' /></a>
+  <a href='index.php'><img src="images/logo_qcm2maths.png" alt="logo Qcm2Maths" id='logo_header' /></a>
         <h1 id='h1-header'>Qcm2Maths - QCM de Mathématiques</h1>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
