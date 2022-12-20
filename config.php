@@ -4,13 +4,13 @@ define('APPNAME', 'Qcm2Maths');
 define('MATIERE', 'Mathématiques');
 // informations d'identification de la base de données
 define('DB_SERVER', '127.0.0.1');
-define('DB_USERNAME', 'fabrice');
-define('DB_PASSWORD', 'root');
-define('DB_NAME', 'Qcm2Maths');
+define('DB_USERNAME', '');
+define('DB_PASSWORD', '');
+define('DB_NAME', '');
 // informations mail
-define('USERNAME', 'admin@maths.flallemand.fr');
-define('PASSWORD', '$tagada1712Mail');
-define('SMTP', 'maths.flallemand.fr');
+define('USERNAME', '');
+define('PASSWORD', '');
+define('SMTP', '');
 define('PORT', 465);
 
 // tentative de connexion à la base de données MySQL
