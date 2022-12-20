@@ -31,7 +31,7 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
 } else {
 
     /* Récupération des infos de l'utilisateur */
-    $req = $bdd->prepare('SELECT * FROM utilisateurs WHERE mail = ?');
+    $req = $bdd->prepare('SELECT * FROM utilisateur WHERE mail = ?');
     $req->execute(array($_POST['email']));
     $utilisateur = $req->fetch();
 
@@ -48,16 +48,26 @@ if (!isset($_POST['mdp']) or !isset($_POST['email']) or $_POST['mdp'] == NULL or
         $_SESSION['prenom'] = $utilisateur['prenom'];
         $_SESSION['mail'] = $utilisateur['mail'];
         $_SESSION['phrase_secrete'] = $utilisateur['phrase_secrete'];
-        $_SESSION['avatar'] = $utilisateur['avatar'];
         $_SESSION['derniere_connexion'] = $utilisateur['derniere_connexion'];
         $_SESSION['connecte'] = true;
         $_SESSION['qualite'] = $utilisateur['statut'];
-        $req = $bdd->prepare('UPDATE utilisateurs SET derniere_connexion = NOW() WHERE mail = ?');
+        $req = $bdd->prepare('UPDATE utilisateur SET derniere_connexion = NOW() WHERE mail = ?');
         $req->execute(array($_POST['email']));
         echo '<script type="text/javascript">                 
                     BSalert("Connexion réussie !", "success")
                 </script>';
-        
+        // Mise à jour du nombre de visites
+        $req = $bdd->prepare('SELECT nb_visites AS nb FROM stats');
+        $req->execute();
+        $nb_visites = $req->fetch()[0];
+        $req = $bdd->prepare('DELETE FROM stats WHERE nb_visites = ?');
+        $req->execute(array($nb_visites));
+        $nb_visites++;
+        $req = $bdd->prepare('INSERT INTO stats (nb_visites) VALUES(?)');
+        $req->execute(array($nb_visites));
+        echo '<script type="text/javascript">                 
+                    alert($nb_visites, "success")
+                </script>';
         header('Location: accueil.php');
         // or die();
         

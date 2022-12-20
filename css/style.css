@@ -68,3 +68,17 @@ i {
 .form_new_user {
     width: 20em;
 }
+
+.titre {
+    text-align: center;
+}
+
+.contenu-principal {
+    width: 95%;
+    margin: auto;   
+}
+
+#summary {
+    width: 50%;
+    margin: 0 auto;
+}

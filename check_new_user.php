@@ -49,7 +49,7 @@ if (!isset($_POST['nom']) or !isset($_POST['prenom']) or !isset($_POST['mail']) 
 // Sinon, on vérifie que les mots de passe correspondent
 if ($_POST['mdp'] == $_POST['mdp2']) {
     // On vérifie que l'adresse mail n'est pas déjà utilisée
-    $req = $bdd->prepare('SELECT nom FROM utilisateurs WHERE mail = ?');
+    $req = $bdd->prepare('SELECT nom FROM utilisateur WHERE mail = ?');
     $req->execute(array($_POST['mail']));
     $result = $req->rowCount();
     // echo "adresse du formulaire : ".$_POST['mail'].'<br>';
@@ -61,7 +61,7 @@ if ($_POST['mdp'] == $_POST['mdp2']) {
             <button class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href = `index.php`;">Retour</button>';
             } else {
                 // On insère les données dans la base de données
-                $req = $bdd->prepare('INSERT INTO utilisateurs (nom, prenom, mail, mdp) VALUES (?, ?, ?, ?)');
+                $req = $bdd->prepare('INSERT INTO utilisateur (nom, prenom, mail, mdp) VALUES (?, ?, ?, ?)');
                 $mdp_hash = hash('sha256', $_POST['mdp']);
                 $rep = $req->execute(array($_POST['nom'], $_POST['prenom'], $_POST['mail'], $mdp_hash));
                 // echo "Retour : ".$rep;

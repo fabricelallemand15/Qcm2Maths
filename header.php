@@ -1,7 +1,7 @@
 <header class="header">
     <?php
     if (isset($bdd) and isset($_SESSION['connecte']) and $_SESSION['connecte'] == true) {
-      $req = $bdd->prepare('SELECT prenom, nom, mail FROM utilisateurs WHERE id_utilisateur = ?');
+      $req = $bdd->prepare('SELECT prenom, nom, mail FROM utilisateur WHERE id_utilisateur = ?');
       $req->execute(array($_SESSION['id_utilisateur']));
       $coordonnees = $req->fetch();
     ?>

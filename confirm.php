@@ -14,14 +14,14 @@ include("header.php");
 <?php
 $mail_hash = $_GET['mail'];
 // on lit tous les mails dans la base de données
-$req = $bdd->prepare('SELECT * FROM utilisateurs');
+$req = $bdd->prepare('SELECT * FROM utilisateur');
 $req->execute();
 $result = $req->fetchAll();
 // on vérifie que l'adresse mail est bien dans la base de données
 $present = false;
 foreach ($result as $row) {
     if (hash('sha256', $row['mail']) == $mail_hash) {
-        $req = $bdd->prepare('UPDATE utilisateurs SET verified = 1 WHERE mail = ?');
+        $req = $bdd->prepare('UPDATE utilisateur SET verified = 1 WHERE mail = ?');
         $req->execute(array($row['mail']));
         echo '<script type="text/javascript">                 
                 BSalert("Votre adresse mail a bien été confirmée ! Vous pouvez maintenant vous connecter.", "success")
