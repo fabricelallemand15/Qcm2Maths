@@ -1,8 +1,6 @@
-.vscode
+.vscode/
 config.php
-MathsQcmApp.sql
 roadmap.md
 pensebete.md
 *.sql
 config_bak.php
-config.php
