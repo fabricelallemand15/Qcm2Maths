@@ -3,9 +3,15 @@ require('config.php');
 include("head.php");
 include("header.php"); 
 
+
+if (!isset($_POST['nom']) or !isset($_POST['prenom']) or !isset($_POST['mail']) or !isset($_POST['mdp']) or !isset($_POST['mdp2']) or $_POST['nom'] == NULL or $_POST['prenom'] == NULL or $_POST['mail'] == NULL or $_POST['mdp'] == NULL or $_POST['mdp2'] == NULL) {
+
+    echo "Vous ne devriez pas être ici : <a href='index.php'>Retour</a>";
+    die();
+} 
+
 // utilisation de PHPMailer pour l'envoi de mail
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
