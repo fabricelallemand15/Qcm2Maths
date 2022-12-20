@@ -14,17 +14,16 @@ require 'PHPMailer/src/SMTP.php';
 // paramétrage de PHPMailer
 $mail = new PHPMailer();
 $mail->IsSMTP();
-$mail->Host = 'maths.flallemand.fr';               //Adresse IP ou DNS du serveur SMTP
-$mail->Port = 465;                          //Port TCP du serveur SMTP
+$mail->Host = SMTP;               //Adresse IP ou DNS du serveur SMTP
+$mail->Port = PORT;                          //Port TCP du serveur SMTP
 $mail->SMTPAuth = 1;                        //Utiliser l'identification
 
 if($mail->SMTPAuth){
-   $mail->SMTPSecure = 'ssl';               //Protocole de sécurisation des échanges avec le SMTP
-   $mail->Username   =  'admin@maths.flallemand.fr';   //Adresse email à utiliser
-   $mail->Password   =  '$tagada1712Mail';         //Mot de passe de l'adresse email à utiliser
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;               //Protocole de sécurisation des échanges avec le SMTP
+   $mail->Username   =  USERNAME;   //Adresse email à utiliser
+   $mail->Password   =  PASSWORD;         //Mot de passe de l'adresse email à utiliser
 }
 $mail->CharSet = 'UTF-8'; //Format d'encodage à utiliser pour les caractères
-$mail->smtpConnect();
 ?>
 
 <h2 class='titre-identification'>Créer un compte</h2>
