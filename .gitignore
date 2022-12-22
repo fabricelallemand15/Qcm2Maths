@@ -2,5 +2,7 @@
 config.php
 roadmap.md
 pensebete.md
-*.sql
 config_bak.php
+cspell.json
+Qcm2Maths.session.sql
+Qcm2Maths.sql

@@ -209,6 +209,7 @@ INSERT INTO domaine (nom, id_niveau) VALUES ('Vocable ensembliste et logique', 3
 INSERT INTO domaine (nom, id_niveau) VALUES ('Nombres complexes', 3);
 INSERT INTO domaine (nom, id_niveau) VALUES ('Arithmétique', 3);
 INSERT INTO domaine (nom, id_niveau) VALUES ('Graphes et matrices', 3);
+INSERT INTO domaine (nom, id_niveau) VALUES ('Automatismes', 3);
 
 -- Liste des sous-domaines et de leur domaine :
 -- Seconde : id_niveau = 1
@@ -223,11 +224,11 @@ INSERT INTO domaine (nom, id_niveau) VALUES ('Graphes et matrices', 3);
 --     - Fonctions : id_domaine = 3
 --          - Se constituer un répertoire de fonctions de référence
 --          - Représenter algébriquement et graphiquement les fonctions
---          - Etudier les variations et les extremums d'une fonction
+--          - Étudier les variations et les extremums d'une fonction
 --     - Statistiques et probabilités : id_domaine = 4
 --          - Utiliser l'information chiffrée et statistique descriptive
 --          - Modéliser le hasard, calculer des probabilités
---          - Echantillonnage
+--          - Échantillonnage
 --     - Algorithmique et programmation : id_domaine = 5
 --          - Utiliser les variables et les instructions élémentaires
 --          - Notion de fonction
@@ -240,10 +241,10 @@ INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Résoudre des problèmes de 
 INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Représenter et caractériser les droites du plan', 2);
 INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Se constituer un répertoire de fonctions de référence', 3);
 INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Représenter algébriquement et graphiquement les fonctions', 3);
-INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Etudier les variations et les extremums d''une fonction', 3);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Étudier les variations et les extremums d''une fonction', 3);
 INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Utiliser l''information chiffrée et statistique descriptive', 4);
 INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Modéliser le hasard, calculer des probabilités', 4);
-INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Echantillonnage', 4);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Échantillonnage', 4);
 INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Utiliser les variables et les instructions élémentaires', 5);
 INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Notion de fonction', 5);
 
@@ -298,6 +299,8 @@ INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Modèle associé à une exp�
 --         - Manipulation des vecteurs, des droites et des plans de l’espace
 --         - Orthogonalité et distances dans l’espace
 --         - Représentations paramétriques et équations cartésiennes
+--         - Coniques
+--         - Géométrie dans l'espace : perspective
 --     - Analyse : id_domaine = 18
 --         - Suites
 --         - Limites de fonctions
@@ -307,6 +310,8 @@ INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Modèle associé à une exp�
 --         - Fonctions sinus et cosinus
 --         - Primitives, équations différentielles
 --         - Calcul intégral
+--         - Fonctions exponentielles
+--         - Fonction inverse
 --     - Probabilités : id_domaine = 19
 --         - Succession d’épreuves indépendantes, schéma de Bernoulli
 --         - Sommes de variables aléatoires
@@ -314,11 +319,39 @@ INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Modèle associé à une exp�
 --         - Lois discrètes
 --         - Lois à densité
 --         - Statistique à deux variables quantitatives
---      - Nombre complexe : id_domaine = 22
---         - Nombres complexes : point de vue algébrique
---         - Nombres complexes : point de vue géométrique
---         - Nombres complexes et trigonométrie
---         - Équations polynomiales
---         - Utilisation des nombres complexes en géométrie
+--         - Probabilités conditionnelles
+--      - Automatismes : id_domaine = 25
+--         - Proportions et pourcentages
+--         - Évolutions et variations
+--         - Calcul numérique et algébrique
+--         - Fonctions et représentations
+--         - Représentations graphiques de données chiffrées
 
--- reste à voir pour les maths expertes et terminales techno
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Combinatoire et dénombrement', 17);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Manipulation des vecteurs, des droites et des plans de l’espace', 17);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Orthogonalité et distances dans l’espace', 17);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Représentations paramétriques et équations cartésiennes', 17);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Coniques', 17);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Géométrie dans l''espace : perspective', 17);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Suites', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Limites de fonctions', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Compléments sur la dérivation', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Continuité des fonctions d’une variable réelle', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Fonction logarithme', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Fonctions sinus et cosinus', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Primitives, équations différentielles', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Calcul intégral', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Fonctions exponentielles', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Fonction inverse', 18);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Succession d’épreuves indépendantes, schéma de Bernoulli', 19);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Sommes de variables aléatoires', 19);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Concentration, loi des grands nombres', 19);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Lois discrètes', 19);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Lois à densité', 19);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Statistique à deux variables quantitatives', 19);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Probabilités conditionnelles', 19);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Proportions et pourcentages', 25);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Évolutions et variations', 25);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Calcul numérique et algébrique', 25);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Fonctions et représentations', 25);
+INSERT INTO sous_domaine (nom, id_domaine) VALUES ('Représentations graphiques de données chiffrées', 25);
