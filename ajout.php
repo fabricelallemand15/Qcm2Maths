@@ -2,238 +2,238 @@
 include("config.php");
 include("head.php");?>
 
-<body>
+<script type="text/javascript" src="js/ajout.js"></script>
+
     <?php
 
-if (empty($_SESSION) or $_SESSION['connecte'] != true) :
+if (empty($_SESSION) or $_SESSION['connecte'] != true){
     include("header.php");
     echo "Vous ne devriez pas être ici : <a href='index.php'>Retour</a>";
-else :
-    include("header.php");
-    include("nav.php");
+    } else {
+        include("header.php");
+        include("nav.php");
+        // on crée la liste des niveaux
+        $req_niveaux = $bdd->prepare("SELECT * FROM niveau");
+        $req_niveaux->execute();
+        $niveaux = $req_niveaux->fetchAll();
+        // on crée la liste des domaines
+        $req_domaines = $bdd->prepare("SELECT niveau.nom AS nom_niveau, domaine.nom as nom_dom FROM domaine JOIN niveau ON domaine.id_niveau = niveau.id_niveau");
+        $req_domaines->execute();
+        $domaines = $req_domaines->fetchAll();
+        // on récupère les sous-domaines
+        $req_sous_domaines = $bdd->prepare("SELECT niveau.nom AS niv, domaine.nom AS nom_dom, sous_domaine.nom AS nom_sous_dom FROM sous_domaine JOIN domaine ON domaine.id_domaine = sous_domaine.id_domaine JOIN niveau on domaine.id_niveau = niveau.id_niveau");
+        $req_sous_domaines->execute();
+        $sous_domaines = $req_sous_domaines->fetchAll();
+        // construction d'un tableau associatif nommé DOMAINES de tableaux associatifs par niveaux, domaines, puis sous-domaines
+        $DOMAINES = array();
+        foreach ($niveaux as $niveau) {
+            $DOMAINES[$niveau['nom']] = array();
+        }
+        foreach ($domaines as $domaine) {
+            $DOMAINES[$domaine['nom_niveau']][$domaine['nom_dom']] = array();
+        }
+        foreach ($sous_domaines as $sous_domaine) {
+            array_push($DOMAINES[$sous_domaine['niv']][$sous_domaine['nom_dom']],$sous_domaine['nom_sous_dom']);
+        }
+        // // afficher tous les niveaux, domaines et sous-domaines sous forme de liste hiérarchique
+        // echo "<ul>";
+        // foreach ($DOMAINES as $niveau => $domaines) {
+        //     echo "<li>".$niveau."</li>";
+        //     echo "<ul>";
+        //     foreach ($domaines as $domaine => $sous_domaines) {
+        //         echo "<li>".$domaine."</li>";
+        //         echo "<ul>";
+        //         foreach ($sous_domaines as $sous_domaine) {
+        //             echo "<li>".$sous_domaine."</li>";
+        //         }
+        //         echo "</ul>";
+        //     }
+        //     echo "</ul>";
+        // }
+        // echo "</ul>";
 
-    $req_domaines = $bdd->prepare("SELECT * FROM sous_domaines INNER JOIN domaines  ON domaines.num_domaine = sous_domaines.num_domaine ORDER BY sous_domaines.num_domaine,sous_domaines.num_sous_domaine");
-    $req_domaines->execute();
-    $domaines = $req_domaines->fetchAll();
+ ?>	
 
-?>
+ <!-- Texte et consignes -->
 
-<?php if ($GENUMMATIERE == "NSI") : ?>
-    <div style="display: none;" id="mise_en_garde">
-        <center>
-            <h3>Pour des raisons de confidentialité, merci de <br><br><b>ne pas saisir de questions provenant de la banque de sujet nationale</b></h3>
-        </center>
-    </div>
+    <div class="contenu-principal">
 
-    <a data-fancybox data-src="#mise_en_garde" data-modal="false" href="mise_en_garde" class="btn btn-primary" id='lien-fancy'></a>
-<?php endif; ?>	
-
-    <h1 class='h1-qcm'>Ajout de question</h1>
+    <h1 class='titre'>Ajout de question</h1>
 
     <p>Vous pouvez dans cette page saisir une nouvelle question. Il suffit de compléter tous les champs proposés.</p>
 
-    <p>Vous pouvez utiliser du <code>html</code> dans les champs de saisie puis cliquer sur le bouton <strong>Voir la question</strong> afin de voir le rendu. Votre saisie sera automatiquement nettoyée.</p>
+    <p>Pour mettre en forme votre texte, vous pouvez utiliser la syntaxe Markdown, en laissant une ligne vide entre chaque paragraphe.</p>
+    <p>Les formules mathématiques seront entrées en $\LaTeX$, encadrées du symbole "\$" pour une équation en ligne et du symbole "\$\$" pour une équation hors ligne centrée.</p>
 
-    <p>Utiliser les balises <code>&lt;pre&gt;&lt;code&gt;...&lt;/code&gt;&lt;/pre&gt;</code> afin de délimiter du code</p>
+    <p>Le code Python sera délimité par "~~~~python" et "~~~~".</p>
 
-    <p>Vous pouvez indiquer le langage utilisé dans les balises de code et ainsi mettre en forme son rendu en faisant :</p>
-    <p>    <code>&lt;pre&gt;&lt;code class="html"&gt;...&lt;/code&gt;&lt;/pre&gt;</code> ou 
-        <code>&lt;pre&gt;&lt;code class="python"&gt;...&lt;/code&gt;&lt;/pre&gt;</code>
-    </p>
-
-    <p>Si vous souhaitez insérer du code <code>html</code> en tant que "texte" d'une questions, échappez les balises avec <code><?= htmlentities("&lt;") ?></code>
-        et <code><?= htmlentities("&gt;") ?></code></p>
-
-    <p>Vous pouvez aussi saisir du <a href="https://fr.wikipedia.org/wiki/Markdown">Markdown</a>. Pour ce faire tapez le au sein d'une balise de classe <code>md</code></p>
-
-    <p>Enfin, vous pouvez saisir des \(maths\) en utilisant la syntaxe de base de <a href="https://www.mathjax.org/">MathJax</a> (avec les <code>\( \)</code>)</p>
+    <p>Il est possible d'insérer une image dans la question. Celle-ci sera toujours centrée et placée entre le texte de la question et les réponses.</p>
 
     <p style="color:red;">Avant d'ajouter une question assurez vous que celle-ci n'est pas déjà présente dans la base.</p>
-    <p style="color:red;">Pour cela il vous suffit d'aller dans le menu <strong>Créer un QCM/Rechercher une question</strong> et de faire une recherche
-        sur quelques mots clés bien choisis.</p>
 
+    <p>Le bouton jaune "Prévisualiser la question" permet de vérifier votre saisie avant d'insérer la question dans la base.</p>
 
-    <form id='formulaire-ajout' method='post' action='verification-ajout.php' enctype="multipart/form-data">
-        <section class='saisie'>
+</div>
 
-            <p class='instruction'>Saisir ci-dessous le code html de votre question</p>
+<!-- Début du formulaire d'ajout -->
+<form id='formulaire-ajout' method='post' action='verification-ajout.php' enctype="multipart/form-data">
 
-            <textarea rows="20" cols="50" id='inp-question' class='inp' name="question" form_id='formulaire-ajout' onclick="selection(this,0)">
-<div class="md">## Un titre en Markdown !</div>
-<br>
-<p>La complexité du tri par sélection est en \(O(n^2)\)</p>
-<p>On a saisi le code suivant :</p>
-<pre><code class="html">
-n = 5
-s = 0
-while n>=0:
-    s = s+n
-    n = n-1
-</code></pre>
-Que contient la variable s à la fin de l’exécution de ce script ?
+<!-- Texte de la question -->
+<section class='saisie alert alert-warning'>
+<p class='instruction'>Saisir ci-dessous la question en utilisant la syntaxe Markdown</p>
+<textarea rows="20" cols="50" id='inp-question' class='inp form-control' name="question" form_id='formulaire-ajout'">
+
 </textarea>
+</section>
 
-        </section>
+<!-- Image associée à la question -->
+<section class='saisie  alert alert-warning'>
+<p class='instruction'>Charger une image (si besoin)</p>
+<p class='instruction'>Seuls les formats jpg, jpeg et png sont acceptés</p>
+<p class='instruction'>Le fichier doit faire moins de 500 ko</p>
+<!-- input pour charger un fichier de type .jpg .jpeg ou .png de 500ko maximum -->
+<div class="input-group mb-3">
+<div class="custom-file">
+    <input type="file" accept="image/jpeg, image/png" max="500000" class="form-control" type="file" name="file" id="file">
+</div>
+<!-- bouton pour remettre à vide la valeur de id=file -->
+<div class="input-group-append" id="bouton_efface">
+    <button class="btn btn-danger" type="button" onclick="effaceImage()">Effacer</button>
+</div>
+</section>
 
-        <section class='saisie'>
+<!-- Saisie de la réponse A -->
+<section class='saisie alert alert-warning'>
+<p class='instruction'>Saisir ci-dessous le code html de votre réponse A</p>
+<textarea rows="10" cols="50" id='inp-repA' class='inp-rep form-control' name="reponseA" form_id='formulaire-ajout'"></textarea>
+</section>
 
-            <p class='instruction'>Saisir ci-dessous le code html de votre réponse A</p>
+<!-- Saisie de la réponse B -->
+<section class='saisie  alert alert-warning'>
+<p class='instruction'>Saisir ci-dessous le code html de votre réponse B</p>
+<textarea rows="10" cols="50" id='inp-repB' class='inp-rep form-control' name="reponseB" form_id='formulaire-ajout'"></textarea>
+</section>
 
-            <textarea rows="10" cols="50" id='inp-repA' class='inp-rep' name="reponseA" form_id='formulaire-ajout' onclick="selection(this,1)">Saisir le code de la réponse A</textarea>
+<!-- Saisie de la réponse C -->
+<section class='saisie  alert alert-warning'>
+<p class='instruction'>Saisir ci-dessous le code html de votre réponse C</p>
+<textarea rows="10" cols="50" id='inp-repC' class='inp-rep form-control' name="reponseC" form_id='formulaire-ajout'"></textarea>
+</section>
 
-        </section>
+<!-- Saisie de la réponse D -->
+<section class='saisie  alert alert-warning'>
+<p class='instruction'>Saisir ci-dessous le code html de votre réponse D</p>
+<textarea rows="10" cols="50" id='inp-repD' class='inp-rep form-control' name="reponseD" form_id='formulaire-ajout' "></textarea>
+</section>
 
+<!-- Choix de la bonne réponse -->
+<section class='saisie alert alert-warning'>
+<p class='instruction'>Indiquer quelle est la bonne réponse</p>
+<select name="bonne_reponse" class="form-select" required>
+    <option value="" id="bonne_rep_g" selected>Choisir la bonne réponse...</option>
+    <option value="A" id="rep_A_g">A</option>
+    <option value="B" id="rep_B_g">B</option>
+    <option value="C" id="rep_C_g">C</option>
+    <option value="D" id="rep_D_g">D</option>
+</select>
+</section>
 
-        <section class='saisie'>
+<!-- Choix du domaine -->
+<section class='saisie alert alert-warning'>
+<p class='instruction'>Indiquer le domaine ou le sous domaine concerné. Un niveau est automatiquement associé à chaque domaine.</p>
+<select name="num_domaine_sous_domaine" class="form-select" required>
+<option value="" selected>Choisir un domaine...</option>
+<?php 
+// liste des options par niveaux, domaine et sous_domaine
+foreach ($DOMAINES as $niveau => $domaines) {
+    $item = $niveau;
+    foreach ($domaines as $domaine => $sous_domaines) {
+        $item = $item."-".$domaine;
+        // si pas de sous domaine, on affiche le domaine
+        if (empty($sous_domaines)) {
+            echo '<option value='.'"'.$item.'">'.$niveau." - ".$domaine."</option>";
+} else {
+    foreach ($sous_domaines as $sous_domaine) {
+        $item = $item . "-" . $sous_domaine;
+        echo '<option value='.'"'. $item.'">' . $niveau . " - " . $domaine . " - " . $sous_domaine . "</option>";
+    }
+}
+        }
+    }
+?>
+</select>
+</section>
 
-            <p class='instruction'>Saisir ci-dessous le code html de votre réponse B</p>
+<!-- prévisualisation la question -->
+<section class='saisie alert alert-warning'" >
+<button class='btn btn-warning' type='button' onclick='rendu_question()' id="rendu_g">Prévisualiser la question</button>
+<div id='div-rendu' class='div-rendu'>
+    <div id='rendu-question'>
+        <!-- emplacement pour le rendu de la question -->
+    </div>
+    <!-- image -->
+    <img id="rendu-img" class='img-question' src="#" alt="Image non trouvée..." />
+    
+    <!-- Groupe de cases à cocher pour les réponses -->
+    <!-- réponse A -->
+    <div class="input-group my-4" id=repA>
+        <div class="input-group-text">
+            <input class="form-check-input mt-0" type="radio" name="radio-rep" id="radio-repA">
+        </div>
+        <label id="rendu-repA" class="form-check-label form-control" for="radio-repA">
+            Reponse A
+        </label>
+    </div>
 
-            <textarea rows="10" cols="50" id='inp-repB' class='inp-rep' name="reponseB" form_id='formulaire-ajout' onclick="selection(this,2)">Saisir le code de la réponse B</textarea>
+    <!-- réponse B -->
+    <div class="input-group  my-4" id=repB>
+        <div class="input-group-text">
+            <input class="form-check-input mt-0" type="radio" name="radio-rep" id="radio-repB">
+        </div>
+        <label id="rendu-repB" class="form-check-label form-control" for="radio-repB">
+            Reponse B
+        </label>
+    </div>
 
-        </section>
+    <!-- réponse C -->
+    <div class="input-group  my-4" id=repC>
+        <div class="input-group-text">
+            <input class="form-check-input mt-0" type="radio" name="radio-rep" id="radio-repC">
+        </div>
+        <label id="rendu-repC" class="form-check-label form-control" for="radio-repC">
+            Reponse C
+        </label>
+    </div>
 
+    <!-- réponse D -->
+    <div class="input-group  my-4" id=repD>
+        <div class="input-group-text">
+            <input class="form-check-input mt-0" type="radio" name="radio-rep" id="radio-repD">
+        </div>
+        <label id="rendu-repD" class="form-check-label form-control" for="radio-repD">
+            Reponse D
+        </label>
+    </div>
+    <!-- réponse par défaut -->
+    <div class="input-group  my-4" id=repE>
+        <div class="input-group-text">
+            <input class="form-check-input mt-0" type="radio" name="radio-rep" id="radio-repE" checked>
+        </div>
+        <label class="form-check-label form-control" for="radio-repE">
+            Je ne sais pas...
+        </label>
+    </div>
+</div>
+</section>
 
-        <section class='saisie'>
-
-            <p class='instruction'>Saisir ci-dessous le code html de votre réponse C</p>
-
-            <textarea rows="10" cols="50" id='inp-repC' class='inp-rep' name="reponseC" form_id='formulaire-ajout' onclick="selection(this,3)">Saisir le code de la réponse C</textarea>
-
-
-        </section>
-
-
-        <section class='saisie'>
-
-            <p class='instruction'>Saisir ci-dessous le code html de votre réponse D</p>
-
-            <textarea rows="10" cols="50" id='inp-repD' class='inp-rep' name="reponseD" form_id='formulaire-ajout' onclick="selection(this,4)">Saisir le code de la réponse D</textarea>
-
-        </section>
-
-        <section class='saisie'>
-
-            <p class='instruction'>Charger une image (si besoin)</p>
-            <p class='instruction'>Seuls les formats jpg, jpeg et png sont acceptés</p>
-            <p class='instruction'>Le fichier doit faire moins de 300 ko</p>
-
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                    <input type="hidden" name="MAX_FILE_SIZE" value="300000" />
-                    <input type="file" accept=".jpg, .jpeg, .png, image/*" class="custom-file-input" type="file" name="file" id="file">
-                    <label class="custom-file-label" id="file-label" for="inputGroupFile01">Choisir un fichier...</label>
-                </div>
-            </div>
-
-        </section>
-
-        <section class='saisie'>
-
-            <p class='instruction'>Indiquer quelle est la bonne réponse</p>
-
-            <select name="bonne_reponse" class="custom-select" required>
-                <option value="" id="bonne_rep_g" selected>Choisir une bonne réponse...</option>
-                <option value="A" id="rep_A_g">A</option>
-                <option value="B" id="rep_B_g">B</option>
-                <option value="C" id="rep_C_g">C</option>
-                <option value="D" id="rep_D_g">D</option>
-            </select>
-
-        </section>
-
-        <section class='saisie'>
-
-            <p class='instruction'>Indiquer le domaine concerné</p>
-
-            <select name="num_domaine_sous_domaine" class="custom-select" required>
-
-                <option value="">Choisir un domaine...</option>
-                <?php foreach ($domaines as $domaine) : ?>
-                    <option value="<?= $domaine['num_domaine'] . "-" . $domaine['num_sous_domaine'] ?>"><?= $domaine['domaine'] . " - " . $domaine['sous_domaine'] ?></option>
-                <?php endforeach ?>
-            </select>
-
-        </section>
-
-        <section class='saisie'>
-
-            <button class='btn btn-info' type='button' onclick='rendu()' id="rendu_g">Voir la question</button>
-
-            <div id='div-rendu' class='div-rendu'>
-                <p id='rendu-q'>
-                    Saisir le code de la question
-                </p>
-
-                <img id="rendu-img" class='img-question' src="#" alt="Image à insérer" />
-
-                <div class='input-group rendu-reponse' id='div-rendu-repA'>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input type="radio" disabled>
-                        </div>
-                    </div>
-                    <span class='form-control' id='rendu-repA'>Reponse A</span>
-                </div>
-
-                <br>
-
-                <div class='input-group rendu-reponse' id='div-rendu-repB'>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input type="radio" disabled>
-                        </div>
-                    </div>
-                    <span class='form-control' id='rendu-repB'>Reponse B</span>
-                </div>
-
-                <br>
-
-                <div class='input-group rendu-reponse' id='div-rendu-repC'>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input type="radio" disabled>
-                        </div>
-                    </div>
-                    <span class='form-control' id='rendu-repC'>Reponse C</span>
-                </div>
-
-                <br>
-
-                <div class='input-group rendu-reponse' id='div-rendu-repD'>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input type="radio" disabled>
-                        </div>
-                    </div>
-                    <span class='form-control' id='rendu-repD'>Reponse D</span>
-                </div>
-
-                <br>
-
-                <div class='input-group rendu-reponse'>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                            <input type="radio" disabled>
-                        </div>
-                    </div>
-                    <span class='form-control'>Je ne sais pas...</span>
-                </div>
-
-                <br>
-            </div>
-
-        </section>
-
-        <button class='btn btn-info' type='submit' id="insertion_g">Insérer la question dans la base</button>
-
-
-    </form>
+<!-- Bouton pour tout valider et insérer la question dans la base -->
+<button class='btn btn-primary' type='submit' id="insertion_g">Insérer la question dans la base</button>
+</form>
 <?php
-endif;
+    }
 include("footer.php");
 ?>
-
-</body>
+<!-- 
 
 <script>
     function rendu() {
@@ -373,4 +373,4 @@ include("footer.php");
     }
 </script>
 
-</html>
+</html> -->

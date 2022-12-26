@@ -4,7 +4,6 @@ include("config.php");
 include("head.php");
 ?>
 
-<body>
 <?php
 if (empty($_SESSION) or $_SESSION['connecte'] != true) {
     include("header.php");

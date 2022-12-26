@@ -26,6 +26,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-highlight/prism-line-highlight.css" data-noprefix />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.css" data-noprefix />
 
+    <!-- Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- DOMPurify -->
+    <script type="text/javascript" src="js/purify.min.js"></script>
+
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css" />
 
