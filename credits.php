@@ -23,6 +23,16 @@
         <li><a class='link' href='https://genumsi.inria.fr/index.php'>GeNumSI :</a> le point de départ du développement de cette application.</li>
         <li><a class='link' href='https://getbootstrap.com/'>Bootstrap :</a> styles css rapides</li>
         <li>Logo : <a class='link' href='https://pixabay.com/fr/'>Pixabay</a></li>
+        <!-- PHPMailer pour la gestion des courriels -->
+        <li><a class='link' href='https://github.com/PHPMailer/PHPMailer'>PHPMailer : gestion des courriels</a></li>
+        <!-- Mathjax -->
+        <li><a class='link' href='https://www.mathjax.org/'>MathJax : affichage des formules mathématiques</a></li>
+        <!-- PrismJS -->
+        <li><a class='link' href='https://prismjs.com/'>PrismJS : coloration syntaxique</a></li>
+        <!-- MarkedJS -->
+        <li><a class='link' href='https://github.com/markedjs/marked'>MarkedJS : gestion du format markdown</a></li>
+        <!-- DOMPurify -->
+        <li><a class='link' href='https://github.com/cure53/DOMPurify'>DOMPurify : nettoyage et sécurisation du code HTML</a></li>
     </ul>
 
 <?php include("footer.php") ?>
