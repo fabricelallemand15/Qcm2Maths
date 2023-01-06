@@ -2,6 +2,7 @@
 include("config.php");
 include("head.php");
 
+echo '<script type="text/javascript" src="js/BSalert.js"></script>';
 
 if (empty($_SESSION) or $_SESSION['connecte'] != true) {
     include("header.php");
@@ -27,32 +28,34 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
     // echo "Retour post : ".$_POST['num_domaine_sous_domaine']."<br>";
     $selection_domaine = explode('-', $_POST['num_domaine_sous_domaine']);
     $niveau = $selection_domaine[0];
-    echo "Niveau : ".$niveau."<br>";
+    // echo "Niveau : ".$niveau."<br>";
     $domaine = $selection_domaine[1];
-    echo "Domaine : ".$domaine."<br>";
+    // echo "Domaine : ".$domaine."<br>";
     $sous_domaine = "";
     if (isset($selection_domaine[2])) {
         $sous_domaine = $selection_domaine[2];
     }
-    echo "Sous domaine : ".$sous_domaine."<br>";
+    // echo "Sous domaine : ".$sous_domaine."<br>";
     // on récupère id_niveau de niveau dans la base
     $req_niveau = $bdd->prepare("SELECT id_niveau FROM niveau WHERE nom = ?");
     $req_niveau->execute(array($niveau));
     $id_niveau = $req_niveau->fetch()[0];
-    echo "le id-niveau est : " . $id_niveau . "<br>";
+    // echo "le id-niveau est : " . $id_niveau . "<br>";
     // on récupère id_domaine de domaine dans la base
     $req_domaine = $bdd->prepare("SELECT id_domaine FROM domaine WHERE nom = ? AND id_niveau = ?");
     $req_domaine->execute(array($domaine, $id_niveau));
     $id_domaine = $req_domaine->fetch()[0];
     // afficher le résultat de la requête
-    echo "id_domaine : ".$id_domaine."<br>";
+    // echo "id_domaine : ".$id_domaine."<br>";
     // on récupère id_sous_domaine de sous_domaine dans la base
     if ($sous_domaine != "") {
         $req_sous_domaine = $bdd->prepare("SELECT id_sous_domaine FROM sous_domaine WHERE nom = ? AND id_domaine = ?");
         $req_sous_domaine->execute(array($sous_domaine, $id_domaine));
         $id_sous_domaine = $req_sous_domaine->fetch()[0];
         // afficher le résultat de la requête
-        echo "id_sous_domaine : ".$id_sous_domaine."<br>";
+        // echo "id_sous_domaine : ".$id_sous_domaine."<br>";
+    } else {
+        $id_sous_domaine = NULL;
     }
     // on récupère id_auteur de utilisateur
     $id_auteur = $_SESSION['id_utilisateur'];
@@ -74,29 +77,27 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
             $fichier_image
         )
     );
-    if ($rep) {
-        echo "Insertion faite !"."<br>";
-    } else {
-        echo "Erreur d'insertion !"."<br>";
-    }
+    // if ($rep) {
+    //     echo "Insertion faite !"."<br>";
+    // } else {
+    //     echo "Erreur d'insertion !"."<br>";
+    // }
     // vérification du type de toutes les variables de la requête
-    echo "Type de texte : ".gettype($texte)."<br>";
-    echo "Type de reponseA : ".gettype($reponseA)."<br>";
-    echo "Type de reponseB : ".gettype($reponseB)."<br>";
-    echo "Type de reponseC : ".gettype($reponseC)."<br>";
-    echo "Type de reponseD : ".gettype($reponseD)."<br>";
-    echo "Type de bonne_reponse : ".gettype($bonne_reponse)."<br>";
-    echo "Type de id_auteur : ".gettype($id_auteur)."<br>";
-    echo "Type de id_domaine : ".gettype($id_domaine)."<br>";
-    echo "Type de id_sous_domaine : ".gettype($id_sous_domaine)."<br>";
-    echo "Type de id_niveau : ".gettype($id_niveau)."<br>";
-    echo "Type de fichier_image : ".gettype($fichier_image)."<br>";
-    
-
+    // echo "Type de texte : ".gettype($texte)."<br>";
+    // echo "Type de reponseA : ".gettype($reponseA)."<br>";
+    // echo "Type de reponseB : ".gettype($reponseB)."<br>";
+    // echo "Type de reponseC : ".gettype($reponseC)."<br>";
+    // echo "Type de reponseD : ".gettype($reponseD)."<br>";
+    // echo "Type de bonne_reponse : ".gettype($bonne_reponse)."<br>";
+    // echo "Type de id_auteur : ".gettype($id_auteur)."<br>";
+    // echo "Type de id_domaine : ".gettype($id_domaine)."<br>";
+    // echo "Type de id_sous_domaine : ".gettype($id_sous_domaine)."<br>";
+    // echo "Type de id_niveau : ".gettype($id_niveau)."<br>";
+    // echo "Type de fichier_image : ".gettype($fichier_image)."<br>";
 
     $statut = "";
     /* Récupération du numéro de la question pour nommer l'image*/
-    $req_id = $bdd->prepare("SELECT id_question FROM question WHERE id_auteur = ? ORDER BY date_ajout DESC LIMIT 1");
+    $req_id = $bdd->prepare("SELECT id_question FROM question WHERE id_auteur = ? ORDER BY date_creation DESC LIMIT 1");
     $req_id->execute(array($_SESSION['id_utilisateur']));
 
     $id = $req_id->fetch();
@@ -107,7 +108,8 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
         $filename = $id['id_question'] . "_" . $_FILES['file']['name'];
 
         /* Emplacement du fichier */
-        $location = "image_questions/" . $filename;
+        $root = getcwd();
+        $location = $root."/images/" . $filename;
         $imageFileType = pathinfo($location, PATHINFO_EXTENSION);
 
         /* Confirmation du type d'image */
@@ -115,15 +117,16 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
 
         if (!in_array(strtolower($imageFileType), $valid_extensions)) {
             $statut = "erreur_format";
-        } else if ($_FILES['file']['size'] > 300000) {
+        } else if ($_FILES['file']['size'] > 500000) {
             $statut = 'erreur_taille';
         } else if (strlen($filename) > 50) {
             $statut = 'erreur_nom';
         } else {
             /* Chargement de l'image */
+            // echo $_FILES['file']['tmp_name'];
             if (move_uploaded_file($_FILES['file']['tmp_name'], $location)) {
                 $statut = 'success';
-                $sql = "UPDATE questions SET image = '" . $filename . "' WHERE num_question = " . $id['num_question'];
+                $sql = "UPDATE question SET nom_image = '" . $filename . "' WHERE id_question = " . $id['id_question'];
                 $update_img = $bdd->prepare($sql);
                 $update_img->execute();
             } else {
@@ -152,132 +155,40 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
     ?>
 
 <?php
-    $req_domaine = $bdd->prepare("SELECT domaine FROM domaines WHERE num_domaine = " . $dom_ss_dom[0]);
+    $req_domaine = $bdd->prepare("SELECT nom FROM domaine WHERE id_domaine = " . $id_domaine);
     $req_domaine->execute();
     $domaine = $req_domaine->fetch();
-
-    $req_sous_domaine = $bdd->prepare("SELECT sous_domaine FROM sous_domaines WHERE num_sous_domaine = " . $dom_ss_dom[1]);
-    $req_sous_domaine->execute();
-    $sous_domaine = $req_sous_domaine->fetch();
+    if ($id_sous_domaine == NULL) {
+            echo '<p>Elle fait partie du domaine "<b>' . $domaine[0] . '"</b>, niveau "<b>' . $niveau . '</b>" </p>';
+    } else {
+        $req_sous_domaine = $bdd->prepare("SELECT nom FROM sous_domaine WHERE id_sous_domaine = " . $id_sous_domaine);
+        $req_sous_domaine->execute();
+        $sous_domaine = $req_sous_domaine->fetch();
+        echo '<p>Elle fait partie du domaine "<b>' . $domaine[0] . '</b>" et du sous domaine "<b>' . $sous_domaine[0] . '</b>", niveau "<b>' . $niveau . '</b>" </p>';
+    }
 ?>
 
-    <p>Elle fait partie du domaine "<b><?= $domaine['domaine'] ?></b>" et du sous-domaine "<b><?= $sous_domaine['sous_domaine'] ?></b>" </p>
+<p>Voici son rendu :</p>
+<div class='div-rendu'>
+    <?php
+    afficher_question($id['id_question'], "avec_reponses");
+    ?>
+</div>
 
-  
+<div class="vstack gap-3">
 
-    <p>Voici son rendu :</p>
-    <div class='div-rendu'>
-        <?php
-    $numero_q = 1;
+<form method="post" action="modif-question.php">
+    <input type="hidden" name="id_question" value="<?= $id['id_question'] ?>">
+    <button class='btn btn-success'>Modifier cette question</button>
+</form>
 
-    $req_q = $bdd->prepare("SELECT * FROM questions WHERE num_question = ?");
-    $req_q->execute(array($id['num_question']));
+<form method="post" action="ajout.php">
+    <button class='btn btn-primary'>Nouvel Ajout</button>
+</form>
 
-    $question = $req_q->fetch();
-        ?>
-        <div>
-            <?= $question['question'] ?>
-        </div>
-        <?php
-
-    if (!is_null($question['image'])):
-        ?>
-
-            <img class='img-question' src="image_questions/<?= $question['image'] ?>">
-
-        <?php endif; ?>
-
-        <div class='input-group reponse-selection-<?php if ($question['bonne_reponse'] == 'A'):
-        echo 'bonne'; else:
-        echo "mauvaise";
-    endif; ?>'>
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="radio" disabled>
-                </div>
-            </div>
-            <span class='form-control'><?= $question['reponseA'] ?></span>
-        </div>
-       
-        <br>
-        <br>
-
-        <div class='input-group reponse-selection-<?php if ($question['bonne_reponse'] == 'B'):
-        echo 'bonne'; else:
-        echo "mauvaise";
-    endif; ?>'>
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="radio" disabled>
-                </div>
-            </div>
-            <span class='form-control'><?= $question['reponseB'] ?></span>
-        </div>
-
-        <br>
-
-        <div class='input-group reponse-selection-<?php if ($question['bonne_reponse'] == 'C'):
-        echo 'bonne'; else:
-        echo "mauvaise";
-    endif; ?>'>
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="radio" disabled>
-                </div>
-            </div>
-            <span class='form-control'><?= $question['reponseC'] ?></span>
-        </div>
-
-        <br>
-
-        <div class='input-group reponse-selection-<?php if ($question['bonne_reponse'] == 'D'):
-        echo 'bonne'; else:
-        echo "mauvaise";
-    endif; ?>'>
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="radio" disabled>
-                </div>
-            </div>
-            <span class='form-control'><?= $question['reponseD'] ?></span>
-        </div>
-
-        <br>
-
-        <div class='input-group reponse-selection-mauvaise'>
-            <div class="input-group-prepend">
-                <div class="input-group-text">
-                    <input type="radio" disabled checked>
-                </div>
-            </div>
-            <span class='form-control'>Je ne sais pas...</span>
-        </div>
-
-        <br>
-    </div>
-    <p>Cliquer ci-dessous pour la modifier</p>
-    <form method="post" action="modif-question.php">
-        <input type="hidden" name="num_question" value="<?= $id['num_question'] ?>">
-        <button class='btn btn-info'>Modifier cette question</button>
-    </form>
-
-    <p>Cliquer ci-dessous pour effectuer un nouvel ajout</p>
-
-    <form method="post" action="ajout.php">
-        <button class='btn btn-info'>Nouvel Ajout</button>
-    </form>
+</div>
 
 <?php
 }
 include("footer.php")
 ?>
-
-</body>
-
-<script>
-    $("document").ready(function() {
-        render_md_math();
-    })
-</script>
-
-</html>

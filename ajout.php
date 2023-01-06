@@ -2,8 +2,6 @@
 include("config.php");
 include("head.php");?>
 
-<script type="text/javascript" src="js/ajout.js"></script>
-
     <?php
 
 if (empty($_SESSION) or $_SESSION['connecte'] != true){
@@ -35,23 +33,6 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true){
         foreach ($sous_domaines as $sous_domaine) {
             array_push($DOMAINES[$sous_domaine['niv']][$sous_domaine['nom_dom']],$sous_domaine['nom_sous_dom']);
         }
-        // // afficher tous les niveaux, domaines et sous-domaines sous forme de liste hiérarchique
-        // echo "<ul>";
-        // foreach ($DOMAINES as $niveau => $domaines) {
-        //     echo "<li>".$niveau."</li>";
-        //     echo "<ul>";
-        //     foreach ($domaines as $domaine => $sous_domaines) {
-        //         echo "<li>".$domaine."</li>";
-        //         echo "<ul>";
-        //         foreach ($sous_domaines as $sous_domaine) {
-        //             echo "<li>".$sous_domaine."</li>";
-        //         }
-        //         echo "</ul>";
-        //     }
-        //     echo "</ul>";
-        // }
-        // echo "</ul>";
-
  ?>	
 
  <!-- Texte et consignes -->
@@ -82,7 +63,6 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true){
 <section class='saisie alert alert-warning'>
 <p class='instruction'>Saisir ci-dessous la question en utilisant la syntaxe Markdown</p>
 <textarea rows="20" cols="50" id='inp-question' class='inp form-control' name="question" form_id='formulaire-ajout'">
-
 </textarea>
 </section>
 
@@ -142,22 +122,22 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true){
 <section class='saisie alert alert-warning'>
 <p class='instruction'>Indiquer le domaine ou le sous domaine concerné. Un niveau est automatiquement associé à chaque domaine.</p>
 <select name="num_domaine_sous_domaine" class="form-select" required>
-<option value="" selected>Choisir un domaine...</option>
+<option value="">Choisir un domaine...</option>
 <?php 
 // liste des options par niveaux, domaine et sous_domaine
 foreach ($DOMAINES as $niveau => $domaines) {
-    $item = $niveau;
     foreach ($domaines as $domaine => $sous_domaines) {
-        $item = $item."-".$domaine;
+        $item = $niveau."-".$domaine;
         // si pas de sous domaine, on affiche le domaine
         if (empty($sous_domaines)) {
-            echo '<option value='.'"'.$item.'">'.$niveau." - ".$domaine."</option>";
-} else {
-    foreach ($sous_domaines as $sous_domaine) {
-        $item = $item . "-" . $sous_domaine;
-        echo '<option value='.'"'. $item.'">' . $niveau . " - " . $domaine . " - " . $sous_domaine . "</option>";
-    }
-}
+                    echo '<option value='.'"'.$item.'">'.$niveau." - ".$domaine."</option>";
+        } else {
+            foreach ($sous_domaines as $sous_domaine) {
+                $item = $item . "-" . $sous_domaine;
+                echo '<option value='.'"'. $item.'">' . $niveau . " - " . $domaine . " - " . $sous_domaine . "</option>";
+                $item = $niveau."-".$domaine;
+            }
+        }
         }
     }
 ?>
@@ -168,6 +148,9 @@ foreach ($DOMAINES as $niveau => $domaines) {
 <section class='saisie alert alert-warning'" >
 <button class='btn btn-warning' type='button' onclick='rendu_question()' id="rendu_g">Prévisualiser la question</button>
 <div id='div-rendu' class='div-rendu'>
+    <div id='rendu-domaine' class='rendu-domaine'>
+        <!-- emplacement pour le rendu du domaine -->
+    </div>
     <div id='rendu-question'>
         <!-- emplacement pour le rendu de la question -->
     </div>
@@ -233,144 +216,3 @@ foreach ($DOMAINES as $niveau => $domaines) {
     }
 include("footer.php");
 ?>
-<!-- 
-
-<script>
-    function rendu() {
-
-        let question = $('#inp-question').val();
-        let repA = $('#inp-repA').val();
-        let repB = $('#inp-repB').val();
-        let repC = $('#inp-repC').val();
-        let repD = $('#inp-repD').val();
-
-        let datas = {
-            question: question,
-            repA: repA,
-            repB: repB,
-            repC: repC,
-            repD: repD
-        };
-
-        $.post('purification.php',
-            datas,
-            function(data) {
-                if (data != "error") {
-                    let cleans = data.split("---purification---");
-                    question = cleans[0];
-                    repA = cleans[1];
-                    repB = cleans[2];
-                    repC = cleans[3];
-                    repD = cleans[4];
-                    $('#inp-question').val(question);
-                    $('#inp-repA').val(repA);
-                    $('#inp-repB').val(repB);
-                    $('#inp-repC').val(repC);
-                    $('#inp-repD').val(repD);
-
-                    let bonne_rep = $('[name=bonne_reponse]').val();
-                    let divs_rep = $('.rendu-reponse');
-                    divs_rep.removeClass('rendu-bonne-reponse');
-                    let div_bonne_rep = $('#div-rendu-rep' + bonne_rep);
-                    div_bonne_rep.addClass('rendu-bonne-reponse');
-
-                    let rendu_q = $('#rendu-q');
-                    let rendu_repA = $('#rendu-repA');
-                    let rendu_repB = $('#rendu-repB');
-                    let rendu_repC = $('#rendu-repC');
-                    let rendu_repD = $('#rendu-repD');
-
-                    rendu_q.html(question)
-                    rendu_repA.html(repA)
-                    rendu_repB.html(repB)
-                    rendu_repC.html(repC)
-                    rendu_repD.html(repD)
-
-                    let input = document.getElementById('file');
-
-
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-
-                        reader.onload = function(e) {
-                            $('#rendu-img').attr('src', e.target.result);
-                        }
-
-                        reader.readAsDataURL(input.files[0]);
-                    }
-
-                    render_md_math()
-                }
-            },
-            'text'
-        )
-
-    }
-
-    $("document").ready(function() {
-        $("#lien-fancy").fancybox().trigger('click');
-
-        rendu();
-
-        $("#file").change(function() {
-            $('#file-label').html($('#file').val().split(/(\\|\/)/g).pop())
-        });
-    });
-
-    function getExtension(filename) {
-        var parts = filename.split('.');
-        return parts[parts.length - 1];
-    }
-
-    function isImage(filename) {
-        var ext = getExtension(filename);
-        switch (ext.toLowerCase()) {
-            case 'jpg':
-            case 'jpeg':
-            case 'png':
-                return true;
-        }
-        return false;
-    }
-
-    function checkSize(f) {
-        if (f[0].files[0].size > 300000) {
-            return false;
-        }
-        return true;
-    }
-
-
-    $(function() {
-        $('#file').change(function() {
-            function failValidation(msg) {
-                alert(msg);
-                $('#file-label').html('Choisir un fichier');
-                file.val("");
-                return false;
-            }
-
-            var file = $('#file');
-            if (!isImage(file.val())) {
-                return failValidation('Choisir un fichier jpg, jpeg ou png');
-            } else if (!checkSize(file)) {
-                return failValidation('Le fichier doit faire moins de 300 ko');
-            }
-
-            return false;
-        });
-
-    })
-
-    first_selection = [true, true, true, true, true]
-
-    function selection(elt, index) {
-        if (first_selection[index]) {
-            first_selection[index] = false
-            elt.focus();
-            elt.select();
-        }
-    }
-</script>
-
-</html> -->

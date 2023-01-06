@@ -1,7 +1,9 @@
 body {
+    width: 98%;
     font-family: 'Open Sans', 'sans-serif';
     font-size: 16px;
-    padding: 20px;
+    padding: 1%;
+    margin: 0 auto;
 }
 
 #login {
@@ -111,11 +113,6 @@ font-family: monospace;
 }
 
 .div-rendu {
-    padding-bottom: 1%;
-    padding-top: 1%;
-}
-
-#div-rendu {
     display: inline-block;
     border: solid 1px #aaa;
     border-radius: 2px;
@@ -124,6 +121,7 @@ font-family: monospace;
     min-height: 25vh;
     background-color: white;
     padding: 2%;
+    margin: 1%;
 }
 
 #rendu-img {
@@ -154,4 +152,29 @@ font-family: monospace;
 
 #bouton_efface {
     margin-left: 1%;
+}
+
+.question {
+    display: inline-block;
+    border: solid 1px #aaa;
+    border-radius: 2px;
+    width: 100%;
+    height: auto;
+    min-height: 25vh;
+    background-color: white;
+    padding: 2%;
+}
+
+.texte_question {
+    margin-left: 1em;
+}
+
+.image_question {
+    max-width: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
+#rendu_g {
+    margin-bottom: 1em;
 }

@@ -38,3 +38,9 @@
 </head>
 
 <body>
+
+<?php
+require('fonctions.php');
+?>
+
+<script type="text/javascript" src="js/fonctions.js"></script>

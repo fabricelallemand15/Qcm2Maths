@@ -60,6 +60,9 @@ function rendu_question() {
     console.log("début");
     // on colorie les réponses
     ombre_reponse();
+    // on récupère le domaine sélectionné
+    // var select = document.getElementsByName("num_domaine_sous_domaine")[0];
+    // document.getElementById("rendu-domaine").innerHTML = select.options[select.selectedIndex].text;
     // on récupère le code Markdown de la question
     var questionMD = document.getElementById("inp-question").value;
     console.log(questionMD);
@@ -121,4 +124,19 @@ function call_prism() {
 function effaceImage() {
     document.getElementById("rendu-img").src = "";
     document.getElementById("file").value = "";
+}
+
+// fonction pour convertir le Markdown en HTML
+function MD_to_html(){
+    // boucle sur tous les éléments de classe md
+    console.log("Début MD_to_html");
+    var elements = document.getElementsByClassName("md");
+    for (var i = 0; i < elements.length; i++) {
+        // on récupère le contenu Markdown
+        var md = elements[i].innerHTML;
+        // on le convertit en HTML
+        var html = DOMPurify.sanitize(marked.parse(md));
+        // on l'affiche
+        elements[i].innerHTML = html;
+    }
 }
