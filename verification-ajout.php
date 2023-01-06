@@ -11,20 +11,20 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
 
     // On détermine les attributs de la question
     $texte = $_POST['question'];
-    echo "Texte : " . $texte . "<br>";
+    // echo "Texte : " . $texte . "<br>";
     $reponseA = $_POST['reponseA'];
-    echo "Reponse A : " . $reponseA . "<br>";
+    // echo "Reponse A : " . $reponseA . "<br>";
     $reponseB = $_POST['reponseB'];
-    echo "Reponse B : " . $reponseB . "<br>";
+    // echo "Reponse B : " . $reponseB . "<br>";
     $reponseC = $_POST['reponseC'];
-    echo "Reponse C : " . $reponseC . "<br>";
+    // echo "Reponse C : " . $reponseC . "<br>";
     $reponseD = $_POST['reponseD'];
-    echo "Reponse D : " . $reponseD . "<br>";
+    // echo "Reponse D : " . $reponseD . "<br>";
     $bonne_reponse = $_POST['bonne_reponse'];
-    echo "Bonne reponse : " . $bonne_reponse . "<br>";
+    // echo "Bonne reponse : " . $bonne_reponse . "<br>";
     $fichier_image = $_FILES['file']['name'];
-    echo "Image : " . $fichier_image . "<br>";
-    echo "Retour post : ".$_POST['num_domaine_sous_domaine']."<br>";
+    // echo "Image : " . $fichier_image . "<br>";
+    // echo "Retour post : ".$_POST['num_domaine_sous_domaine']."<br>";
     $selection_domaine = explode('-', $_POST['num_domaine_sous_domaine']);
     $niveau = $selection_domaine[0];
     echo "Niveau : ".$niveau."<br>";

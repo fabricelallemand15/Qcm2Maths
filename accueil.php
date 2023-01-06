@@ -18,7 +18,7 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
         <div class="row">
             <div class="col-12">
                 <h1 class="titre">Accueil</h1>
-                <p class="titre">Bienvenue sur Qcm2Maths</p>
+                <p class="titre">Bienvenue sur QcmEval</p>
             </div>
         </div>
 
@@ -53,7 +53,7 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
     </div>
 
     <div id="fil">
-    <p>A ce jour, Qcm2Maths c'est :</p>
+    <p>A ce jour, QcmEval c'est :</p>
     <table id="summary" class="table table-striped table-hover table-primary table-bordered">
         <?php
             $req = $bdd->prepare("SELECT nb_visites AS nb FROM stats");

@@ -5,10 +5,10 @@ require('config.php');
 ?>
 
 <div id="login">
-<h2>Bienvenue sur Qcm2Maths</h2>
+<h2>Bienvenue sur QcmEval</h2>
 <div>
     <form id="form_login" action="" method="post">
-            <img class="mb-4" src="images/logo_qcm2maths.png" alt="logo" id="logo">
+            <img class="mb-4" src="images/logo_QcmEval.png" alt="logo" id="logo">
             <h1 class="h3 mb-3 fw-normal">Authentification</h1>
             <div class="d-grid gap-2">
                 <input type="email" name="email" id="email" placeholder="Email" autocomplete="email" required/>

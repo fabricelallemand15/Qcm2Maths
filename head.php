@@ -4,8 +4,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Qcm2Maths</title>
-    <link rel="shortcut icon" type="image/x-icon" href="images/logo_qcm2maths.png" />
+    <title>QcmEval</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo_QcmEval.png" />
 
     <!-- MathJax -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
