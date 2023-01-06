@@ -73,14 +73,14 @@ if ($_POST['mdp'] == $_POST['mdp2']) {
                 // on cache l'adresse mail grâce à un hash
                 $mail_hash = hash('sha256', $_POST['mail']);
                 $mail->From       =  'maths@flallemand.fr';                //L'email à afficher pour l'envoi
-                $mail->FromName   = 'Confirmation Qcm2Maths';           //L'alias à afficher pour l'envoi
+                $mail->FromName   = 'Confirmation QcmEval';           //L'alias à afficher pour l'envoi
                 $mail->AddAddress($_POST['mail']); //L'adresse à laquelle envoyer le mail
                 $mail->Subject  = 'Confirmation d\'inscription'; //Le sujet du mail
                 $mail->Body     = 'Bonjour '.$_POST['prenom'].',<br><br>
-                Vous venez de vous inscrire sur l\'application Qcm2Maths.<br>
-                Pour confirmer votre adresse, cliquez sur le lien suivant : <a href=\'http://localhost:90/Qcm2Maths/confirm.php?mail='.$mail_hash.'\'>http://localhost:90/Qcm2Maths/confirm.php?mail='.$mail_hash.'</a><br><br>
+                Vous venez de vous inscrire sur l\'application QcmEval.<br>
+                Pour confirmer votre adresse, cliquez sur le lien suivant : <a href=\'http://localhost:90/QcmEval/confirm.php?mail='.$mail_hash.'\'>http://localhost:90/QcmEval/confirm.php?mail='.$mail_hash.'</a><br><br>
                 Cordialement,<br><br>
-                L\'équipe de l\'application Qcm2Maths'; //Le contenu du mail
+                L\'équipe de l\'application QcmEval'; //Le contenu du mail
                 $mail->IsHTML(true); //On envoie le mail au format HTML
                 $mail->Send(); //On envoie le mail
                 $mail->SmtpClose(); //On ferme la connexion SMTP

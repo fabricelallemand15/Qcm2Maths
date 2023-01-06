@@ -4,8 +4,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Qcm2Maths</title>
-    <link rel="shortcut icon" type="image/x-icon" href="images/logo_qcm2maths.png" />
+    <title>QcmEval</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo_QcmEval.png" />
 
     <!-- MathJax -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -25,6 +25,12 @@
     <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-highlight/prism-line-highlight.css" data-noprefix />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.css" data-noprefix />
+
+    <!-- Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- DOMPurify -->
+    <script type="text/javascript" src="js/purify.min.js"></script>
 
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css" />
