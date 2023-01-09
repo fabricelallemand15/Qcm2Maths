@@ -164,8 +164,8 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
     <button class='btn btn-success'>Modifier cette question</button>
 </form>
 
-<form method="post" action="ajout.php">
-    <button class='btn btn-primary'>Nouvel Ajout</button>
+<form method="post" action="gestion.php">
+    <button class='btn btn-primary'>Retour</button>
 </form>
 
 </div>
