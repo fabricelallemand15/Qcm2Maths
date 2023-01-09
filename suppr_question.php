@@ -37,6 +37,13 @@ if (!isset($_POST['id_question']) or is_null($_POST['id_question'])) {
             BSalert("Question #'.$_POST['id_question'].' supprimée !", "success");
           </script>';
 }
+?>
+
+<form method="post" action="gestion.php">
+    <button class='btn btn-danger'>Gestion des questions</button>
+</form>
+
+<?php
 
 endif;
 ?>

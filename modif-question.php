@@ -41,12 +41,14 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true){
 
     <h1 class='titre'>Modification de la question <?php echo '#'.$_POST['id_question']?></h1>
 
-    <p>Vous pouvez modifier la nouvelle question. Il suffit de compléter tous les champs proposés.</p>
+    <p>Vous pouvez ici modifier une question. Il suffit de compléter tous les champs proposés.</p>
 
-    <p>Pour mettre en forme votre texte, vous pouvez utiliser la syntaxe Markdown, en laissant une ligne vide entre chaque paragraphe.</p>
+    <p>Pour mettre en forme votre texte, vous devez utiliser la syntaxe Markdown, en laissant une ligne vide entre chaque paragraphe.</p>
     <p>Les formules mathématiques seront entrées en $\LaTeX$, encadrées du symbole "\$" pour une équation en ligne et du symbole "\$\$" pour une équation hors ligne centrée.</p>
 
     <p>Le code Python sera délimité par "~~~~python" et "~~~~".</p>
+
+    <p>Pour en savoir plus, vous pouvez <a href="aide.php">consulter la documentation</a>.</p>
 
     <p>Il est possible d'insérer une image dans la question. Celle-ci sera toujours centrée et placée entre le texte de la question et les réponses.</p>
 

@@ -161,11 +161,15 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
 
 <form method="post" action="modif-question.php">
     <input type="hidden" name="id_question" value="<?= $id_question ?>">
-    <button class='btn btn-success'>Modifier cette question</button>
+    <button class='btn btn-success'>Modifier à nouveau cette question</button>
+</form>
+
+<form method="post" action="ajout.php">
+    <button class='btn btn-primary'>Ajouter une nouvelle question</button>
 </form>
 
 <form method="post" action="gestion.php">
-    <button class='btn btn-primary'>Retour</button>
+    <button class='btn btn-danger'>Gestion des questions</button>
 </form>
 
 </div>
