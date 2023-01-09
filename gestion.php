@@ -32,9 +32,9 @@ else :
     $questions = $req_domaines->fetchAll();
 
 ?>
-    <h1 class='h1-qcm'>Modification de questions</h1>
+    <h1 class='h1-qcm'>Gestion des questions</h1>
 
-    <p>Vous pouvez ici sélectionner la question que vous souhaitez modifier.</p>
+    <p>Vous pouvez ici modifier ou supprimer des questions.</p>
 
     <p>Seules les questions dont vous êtes l'auteur sont affichées (sauf pour les administrateurs).</p>
 
