@@ -14,3 +14,4 @@ jobs:
         server: zenith.o2switch.net
         username: ydpn4730
         password: ${{ secrets.FTP_PWD }}
+        server-dir: public_html/qcm/
