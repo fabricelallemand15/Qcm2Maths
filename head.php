@@ -32,6 +32,11 @@
     <!-- DOMPurify -->
     <script type="text/javascript" src="js/purify.min.js"></script>
 
+    <!-- datatables nécessite jquery-->
+    <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js" integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+
     <!-- Custom styles -->
     <link rel="stylesheet" href="css/style.css" />
 

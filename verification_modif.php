@@ -59,9 +59,12 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
     }
     // on récupère id_auteur de utilisateur
     $id_auteur = $_SESSION['id_utilisateur'];
+
+    // on récupère le id_question de la question
+    $id_question = $_POST['id_question'];
     
     // on ajoute les informations dans la base
-    $req_ajout = $bdd->prepare("INSERT INTO question (texte, reponseA, reponseB, reponseC, reponseD, bonne_reponse, id_auteur, id_domaine, id_sous_domaine, id_niveau, nom_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $req_ajout = $bdd->prepare("UPDATE question SET texte=?, reponseA=?, reponseB=?, reponseC=?, reponseD=?, bonne_reponse=?, id_auteur=?, id_domaine=?, id_sous_domaine=?, id_niveau=?, nom_image=? WHERE id_question=?");
     $rep = $req_ajout->execute(
         array(
             $texte,
@@ -74,21 +77,17 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
             $id_domaine,
             $id_sous_domaine,
             $id_niveau,
-            $fichier_image
+            $fichier_image,
+            $id_question
         )
     );
 
     $statut = "";
-    /* Récupération du numéro de la question pour nommer l'image*/
-    $req_id = $bdd->prepare("SELECT id_question FROM question WHERE id_auteur = ? ORDER BY date_creation DESC LIMIT 1");
-    $req_id->execute(array($_SESSION['id_utilisateur']));
-
-    $id = $req_id->fetch();
 
     /* Chargement de l'image si son nom est non vide */
     if ($_FILES['file']['name'] != "") {
 
-        $filename = $id['id_question'] . "_" . $_FILES['file']['name'];
+        $filename = $id_question . "_" . $_FILES['file']['name'];
 
         /* Emplacement du fichier */
         $root = getcwd();
@@ -109,7 +108,7 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
             // echo $_FILES['file']['tmp_name'];
             if (move_uploaded_file($_FILES['file']['tmp_name'], $location)) {
                 $statut = 'success';
-                $sql = "UPDATE question SET nom_image = '" . $filename . "' WHERE id_question = " . $id['id_question'];
+                $sql = "UPDATE question SET nom_image = '" . $filename . "' WHERE id_question = " . $id_question;
                 $update_img = $bdd->prepare($sql);
                 $update_img->execute();
             } else {
@@ -121,9 +120,9 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
 
 ?>
 
-    <h1 class='h1-qcm'>Confirmation de l'ajout</h1>
+    <h1 class='h1-qcm'>Confirmation de la modification</h1>
 
-    <p>Votre question a été ajoutée dans la base à la référence #<?= $id['id_question'] ?></p>
+    <p>Votre question a été modifiée dans la base à la référence #<?= $id_question ?></p>
 
     <?php
     if ($statut == 'erreur_format') {
@@ -154,14 +153,14 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
 <p>Voici son rendu :</p>
 <div class='div-rendu'>
     <?php
-    afficher_question($id['id_question'], "avec_reponses");
+    afficher_question($id_question, "avec_reponses");
     ?>
 </div>
 
 <div class="vstack gap-3">
 
 <form method="post" action="modif-question.php">
-    <input type="hidden" name="id_question" value="<?= $id['id_question'] ?>">
+    <input type="hidden" name="id_question" value="<?= $id_question ?>">
     <button class='btn btn-success'>Modifier cette question</button>
 </form>
 

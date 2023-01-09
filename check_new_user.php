@@ -78,7 +78,7 @@ if ($_POST['mdp'] == $_POST['mdp2']) {
                 $mail->Subject  = 'Confirmation d\'inscription'; //Le sujet du mail
                 $mail->Body     = 'Bonjour '.$_POST['prenom'].',<br><br>
                 Vous venez de vous inscrire sur l\'application QcmEval.<br>
-                Pour confirmer votre adresse, cliquez sur le lien suivant : <a href=\'http://localhost:90/QcmEval/confirm.php?mail='.$mail_hash.'\'>http://localhost:90/QcmEval/confirm.php?mail='.$mail_hash.'</a><br><br>
+                Pour confirmer votre adresse, cliquez sur le lien suivant : <a href='.PATH_TO_APP.'/confirm.php?mail='.$mail_hash.'\'>'.PATH_TO_APP.'/confirm.php?mail='.$mail_hash.'</a><br><br>
                 Cordialement,<br><br>
                 L\'équipe de l\'application QcmEval'; //Le contenu du mail
                 $mail->IsHTML(true); //On envoie le mail au format HTML

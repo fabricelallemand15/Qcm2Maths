@@ -140,3 +140,16 @@ function MD_to_html(){
         elements[i].innerHTML = html;
     }
 }
+
+// code pour les zones d'alertes 
+function BSalert(message, type) {
+    var alertPlaceholder = document.getElementById('liveAlertPlaceholder');
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = [
+        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+        `<div>${message}</div>`,
+        `<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
+        `</div>`
+    ].join('');
+    alertPlaceholder.append(wrapper);
+}

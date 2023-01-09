@@ -7,3 +7,5 @@ cspell.json
 QcmEval.session.sql
 QcmEval.sql
 vendor/
+config_server.php
+images/

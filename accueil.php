@@ -45,7 +45,7 @@ if (empty($_SESSION) or $_SESSION['connecte'] != true) {
                 <strong>Ajouter, modifier ou exporter des questions de la base</strong>
                 <ul class="navbar-nav mr-auto">
                     <li><a class="link" href="ajout.php">Ajout</a></li>
-                    <li><a class="link" href="modification.php">Modification</a></li>
+                    <li><a class="link" href="gestion.php">Gestion</a></li>
                     <li><a class="link" href="exports.php">Export</a></li>
                 </ul>
             </div>

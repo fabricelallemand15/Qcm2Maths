@@ -27,7 +27,7 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Opérations sur les questions</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="ajout.php">Ajout</a></li>
-                <li><a class="dropdown-item" href="modification.php">Modification</a></li>
+                <li><a class="dropdown-item" href="gestion.php">Gestion</a></li>
                 <li><a class="dropdown-item" href="export.php">Export</a></li>
             </ul>
         </li>

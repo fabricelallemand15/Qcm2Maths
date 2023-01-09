@@ -130,6 +130,12 @@ font-family: monospace;
     margin: 0 auto;
 }
 
+#rendu-img-modif {
+    max-width: 50%;
+    display: block;
+    margin: 0 auto;
+}
+
 #repA {
     height: fit-content;
 }
@@ -151,7 +157,7 @@ font-family: monospace;
 }
 
 #bouton_efface {
-    margin-left: 1%;
+    margin-top: 1em;
 }
 
 .question {
@@ -177,4 +183,20 @@ font-family: monospace;
 
 #rendu_g {
     margin-bottom: 1em;
+}
+
+#image-modif {
+    display: block;
+    height: 100px;
+    margin: 1em;
+}
+
+#supprime-image {
+    margin: 1em;
+}
+
+#liveAlertPlaceholder {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    width: 50%;
 }
