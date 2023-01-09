@@ -61,9 +61,9 @@ if ($_POST['mdp'] == $_POST['mdp2']) {
             <button class="w-100 btn btn-lg btn-primary" type="button" onclick="location.href = `index.php`;">Retour</button>';
             } else {
                 // On insère les données dans la base de données
-                $req = $bdd->prepare('INSERT INTO utilisateur (nom, prenom, mail, mdp) VALUES (?, ?, ?, ?)');
+                $req = $bdd->prepare('INSERT INTO utilisateur (nom, prenom, mail, mdp, phrase_secrete) VALUES (?, ?, ?, ?, ?)');
                 $mdp_hash = hash('sha256', $_POST['mdp']);
-                $rep = $req->execute(array($_POST['nom'], $_POST['prenom'], $_POST['mail'], $mdp_hash));
+                $rep = $req->execute(array($_POST['nom'], $_POST['prenom'], $_POST['mail'], $mdp_hash, $_POST['phrase']));
                 // echo "Retour : ".$rep;
                 echo '<script type="text/javascript">                 
                 BSalert("Inscription réussie ! <br>Vous allez recevoir un courriel de confirmation. Cliquez sur le lien inclus dans ce courriel pour confirmer votre adresse.<br>Vous pourrez alors vous connecter...", "success")
@@ -78,7 +78,7 @@ if ($_POST['mdp'] == $_POST['mdp2']) {
                 $mail->Subject  = 'Confirmation d\'inscription'; //Le sujet du mail
                 $mail->Body     = 'Bonjour '.$_POST['prenom'].',<br><br>
                 Vous venez de vous inscrire sur l\'application QcmEval.<br>
-                Pour confirmer votre adresse, cliquez sur le lien suivant : <a href='.PATH_TO_APP.'/confirm.php?mail='.$mail_hash.'\'>'.PATH_TO_APP.'/confirm.php?mail='.$mail_hash.'</a><br><br>
+                Pour confirmer votre adresse, cliquez sur le lien suivant : <a href='.PATH_TO_APP.'/confirm.php?mail='.$mail_hash.'>'.PATH_TO_APP.'/confirm.php?mail='.$mail_hash.'</a><br><br>
                 Cordialement,<br><br>
                 L\'équipe de l\'application QcmEval'; //Le contenu du mail
                 $mail->IsHTML(true); //On envoie le mail au format HTML

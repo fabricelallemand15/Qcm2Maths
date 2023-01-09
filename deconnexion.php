@@ -1,15 +1,13 @@
 <?php
 session_start();
+include("config.php");
+include("head.php");
 
 if (empty($_SESSION) or $_SESSION['connecte'] != true) :
     include("header.php");
     echo "Vous ne devriez pas être ici : <a href='index.php'>Retour</a>";
 else :
-
-    session_destroy();
-    include('head.php');
     include("header.php");
-
     ?>
 
     <h4>
@@ -19,5 +17,6 @@ else :
     <a href="index.php">Identification</a>
 
 <?php
+session_destroy();
 endif;
 ?>
