@@ -34,10 +34,11 @@ if ($_POST['mdp'] != $_POST['mdp2']) {
             break;
         }
         $donnees = $base->fetch();
-        // echo $donnees['mail'];
+        echo $donnees['mail'];
         // mise à jour du hash de mot de passe dans la base de données
         $requete = $bdd->prepare('UPDATE utilisateur SET mdp = ? WHERE mail = ?');
         $requete->execute(array(hash('sha256', $_POST['mdp']), $donnees['mail']));
+        echo $requete->rowCount();
         // on affiche un message de succès
         echo '<script type="text/javascript">                 
                     BSalert("Votre mot de passe a été modifié avec succès", "success")
