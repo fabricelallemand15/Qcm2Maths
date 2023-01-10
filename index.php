@@ -15,7 +15,7 @@ require('config.php');
                 <input type="password" name="mdp" id="mdp" placeholder="Mot de passe"  autocomplete="new-password" required/>
                 <button class="w-100 btn btn-lg btn-success" type="submit">Valider</button>
                 <button class='w-100 btn btn-lg btn-primary' type="button" onclick="location.href = 'nouvel-utilisateur.php';">Nouvel utilisateur ?</button>
-                <button class='w-100 btn btn-lg btn-warning' type="button" onclick="">Mot de passe oublié ?</button>
+                <button class='w-100 btn btn-lg btn-warning' type="button" onclick="location.href = 'forget_pwd.php'">Mot de passe oublié ?</button>
                 <div id="liveAlertPlaceholder"></div>   
             </div>
             

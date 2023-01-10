@@ -63,6 +63,10 @@ else :
                         <td>
                             <!-- groupe de boutons : modifier et supprimer -->
                             <div class="btn-group" role="group">
+                                <form action="voir_question.php" method="post">
+                                    <input type="hidden" name="id_question" value="<?= $question['id_question'] ?>">
+                                    <button type="submit" class="btn btn-outline-warning"><i class="bi bi-eye"></i></button>
+                                </form>
                                 <form action="modif-question.php" method="post">
                                     <input type="hidden" name="id_question" value="<?= $question['id_question'] ?>">
                                     <button type="submit" class="btn btn-outline-success"><i class="bi bi-pencil"></i></button>

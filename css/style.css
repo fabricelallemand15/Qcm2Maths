@@ -164,9 +164,9 @@ font-family: monospace;
     display: inline-block;
     border: solid 1px #aaa;
     border-radius: 2px;
-    width: 100%;
+    width: 98%;
     height: auto;
-    min-height: 25vh;
+    margin: 1%;
     background-color: white;
     padding: 2%;
 }
@@ -199,4 +199,12 @@ font-family: monospace;
     margin-top: 1em;
     margin-bottom: 1em;
     width: 50%;
+}
+
+#form_change_pwd{
+    width: 30%;
+}
+
+#btn-retour {
+    margin-top: 1em;
 }

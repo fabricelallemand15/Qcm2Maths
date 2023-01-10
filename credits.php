@@ -4,7 +4,7 @@
 
     <h2>Qui sommes-nous ?</h2>
     <br>
-    <p>MathsQcmApp est un projet du groupe local IREM "Aurillac Lycée", groupe de recherche de l'IREM de Clermont-Ferrand. Ce projet a été initié durant l'année scolaire 2022-2023.</p>
+    <p>QcmEval est un projet du groupe local IREM "Aurillac Lycée", groupe de recherche de l'IREM de Clermont-Ferrand. Ce projet a été initié durant l'année scolaire 2022-2023.</p>
 
     <p>Les membres du groupe, à cette date sont :</p>
     <ul>
