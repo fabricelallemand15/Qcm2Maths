@@ -27,17 +27,22 @@ if ($_POST['mdp'] != $_POST['mdp2']) {
     $base = $bdd->prepare('SELECT * FROM utilisateur');
     $base->execute();
     $donnees = $base->fetch();
-    $trouve = false;
+    // echo $donnees['mail'];
+    // $trouve = false;
     while ($donnees != NULL) {
         if (hash('sha256', $donnees['mail']) == $_POST['mail_hash']) {
             $mail = $donnees['mail'];
-            $trouve = true;
+            // echo $mail;
+            // $trouve = true;
             break;
         }
+        $donnees = $base->fetch();
+    }
         // mise à jour du hash de mot de passe dans la base de données
+        // echo "test";
         $requete = $bdd->prepare('UPDATE utilisateur SET mdp = ? WHERE mail = ?');
         $requete->execute(array(hash('sha256', $_POST['mdp']), $mail));
-        echo $requete->rowCount();
+        // echo $requete->rowCount();
         // on affiche un message de succès
         echo '<script type="text/javascript">                 
                     BSalert("Votre mot de passe a été modifié avec succès", "success")
@@ -47,8 +52,5 @@ if ($_POST['mdp'] != $_POST['mdp2']) {
         echo "<a href='index.php'>Retour</a>";
 
     }
-
-
-}
 
 include("footer.php") ?>
