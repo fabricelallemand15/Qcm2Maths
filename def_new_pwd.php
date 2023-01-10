@@ -30,11 +30,11 @@ if ($_POST['mdp'] != $_POST['mdp2']) {
     $trouve = false;
     while ($donnees != NULL) {
         if (hash('sha256', $donnees['mail']) == $_POST['mail_hash']) {
+            echo $donnees['mail'];
             $trouve = true;
             break;
         }
         $donnees = $base->fetch();
-        echo $donnees['mail'];
         // mise à jour du hash de mot de passe dans la base de données
         $requete = $bdd->prepare('UPDATE utilisateur SET mdp = ? WHERE mail = ?');
         $requete->execute(array(hash('sha256', $_POST['mdp']), $donnees['mail']));
